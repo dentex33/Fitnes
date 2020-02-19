@@ -1,0 +1,36 @@
+﻿<Window x:Class="Fitnes.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+        xmlns:viewModel="clr-namespace:Fitnes.ViewModel"
+        d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
+        mc:Ignorable="d"
+        Title="Фитнес приложение" Height="487.242" Width="1065.345" ResizeMode="NoResize">
+    <Grid Margin="10,0,0,0">
+        <d3:ChartPlotter Margin="515,0,0,54">
+            <d3:LineGraph DataSource="{Binding UserTable}"></d3:LineGraph>
+        </d3:ChartPlotter>
+        <DataGrid SelectedItem="{Binding ChosenUser}" IsReadOnly="True" ItemsSource="{Binding Users , UpdateSourceTrigger=PropertyChanged}" ColumnWidth="*" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="405" VerticalAlignment="Top" Width="490" Margin="0,0,0,0" IsEnabled="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Пользователь" Binding="{Binding User}"/>
+                <DataGridTextColumn Header="Среднее количество пройденных шагов" Binding="{Binding Average}"/>
+                <DataGridTextColumn Header="Лучший результат" Binding="{Binding BestResult}"/>
+                <DataGridTextColumn Header="Худший результат" Binding="{Binding WorstResult}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Вывести в Json" Command="{Binding CreateJSON}" HorizontalAlignment="Left" Height="34" Margin="315,410,0,0" VerticalAlignment="Top" Width="399" FontSize="20"/>
+        <Label Content="Шаги" HorizontalAlignment="Left" Height="32" Margin="470,173,0,0" VerticalAlignment="Top" Width="59" RenderTransformOrigin="0.5,0.5" FontSize="20">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label Content="Дни" HorizontalAlignment="Left" Height="39" Margin="789,400,0,0" VerticalAlignment="Top" Width="51" FontSize="20"/>
+        </Grid>
+</Window>
