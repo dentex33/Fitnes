@@ -7,9 +7,9 @@
         xmlns:viewModel="clr-namespace:Fitnes.ViewModel"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
         mc:Ignorable="d"
-        Title="Фитнес приложение" Height="487.242" Width="1065.345" ResizeMode="NoResize">
-    <Grid Margin="10,0,0,0">
-        <d3:ChartPlotter Margin="515,0,0,54">
+        Title="Фитнес приложение" Height="522.931" Width="1065.345" ResizeMode="NoResize">
+    <Grid>
+        <d3:ChartPlotter Margin="515,0,0,89">
             <d3:LineGraph DataSource="{Binding UserTable}"></d3:LineGraph>
         </d3:ChartPlotter>
         <DataGrid SelectedItem="{Binding ChosenUser}" IsReadOnly="True" ItemsSource="{Binding Users , UpdateSourceTrigger=PropertyChanged}" ColumnWidth="*" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="405" VerticalAlignment="Top" Width="490" Margin="0,0,0,0" IsEnabled="True">
@@ -20,7 +20,7 @@
                 <DataGridTextColumn Header="Худший результат" Binding="{Binding WorstResult}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Вывести в Json" Command="{Binding CreateJSON}" HorizontalAlignment="Left" Height="34" Margin="315,410,0,0" VerticalAlignment="Top" Width="399" FontSize="20"/>
+        <Button Content="Вывести в Json" Command="{Binding CreateJSON}" HorizontalAlignment="Left" Height="30" Margin="846,449,0,0" VerticalAlignment="Top" Width="173" FontSize="20"/>
         <Label Content="Шаги" HorizontalAlignment="Left" Height="32" Margin="470,173,0,0" VerticalAlignment="Top" Width="59" RenderTransformOrigin="0.5,0.5" FontSize="20">
             <Label.RenderTransform>
                 <TransformGroup>
@@ -31,6 +31,12 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Label Content="Дни" HorizontalAlignment="Left" Height="39" Margin="789,400,0,0" VerticalAlignment="Top" Width="51" FontSize="20"/>
-        </Grid>
+        <Label Content="Дни" HorizontalAlignment="Left" Height="39" Margin="794,402,0,0" VerticalAlignment="Top" Width="51" FontSize="20"/>
+        <Button Content="Показать" Command="{Binding ShowSome}" HorizontalAlignment="Left" Height="30" Margin="612,449,0,0" VerticalAlignment="Top" Width="152" FontSize="20"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding FirstDay,UpdateSourceTrigger=PropertyChanged}" Height="30" Margin="361,449,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="20"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding LastDay,UpdateSourceTrigger=PropertyChanged}" Height="30" Margin="477,449,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" FontSize="20"/>
+        <Label Content="первый" HorizontalAlignment="Left" Height="26" Margin="392,423,0,0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="0.517,-0.018"/>
+        <Label Content="последний" HorizontalAlignment="Left" Height="26" Margin="493,423,0,0" VerticalAlignment="Top" Width="79"/>
+        <Label Content="Введите номера дней для отображения в таблице: " HorizontalAlignment="Left" Height="30" Margin="15,449,0,0" VerticalAlignment="Top" Width="341" FontSize="14"/>
+    </Grid>
 </Window>

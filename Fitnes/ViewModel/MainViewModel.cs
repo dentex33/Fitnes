@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Fitnes.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel:INotifyPropertyChanged
     {
         private List<UserAppData> users;
         public List<UserAppData> Users { get { return users; } 
@@ -19,6 +19,26 @@ namespace Fitnes.ViewModel
             {
                 users = value;
                 OnPropertyChanged("Users");
+            }
+        }
+        private int firstDay;
+        public int FirstDay
+        {
+            get { return firstDay; }
+            set
+            {
+                firstDay = value;
+                OnPropertyChanged("FirstDay");
+            }
+        }
+        private int lastDay;
+        public int LastDay
+        {
+            get { return lastDay; }
+            set
+            {
+                lastDay = value;
+                OnPropertyChanged("LastDay");
             }
         }
         private RelayCommand createJSON;
@@ -30,11 +50,11 @@ namespace Fitnes.ViewModel
                     (createJSON = new RelayCommand(obj =>
                       {
                           
-                          if (_chosenUser == null)
+                          if (chosenUser == null)
                               System.Windows.MessageBox.Show("Ќе выбрано ни одно поле!");
                           else
                           {
-                              UserOutJson user = new UserOutJson {User=_chosenUser.User, Average = _chosenUser.Average, Rank = _chosenUser.Rank, Status = _chosenUser.Status, BestResult = _chosenUser.BestResult, WorstResult = _chosenUser.WorstResult}; 
+                              UserOutJson user = new UserOutJson {User=chosenUser.User, Average = chosenUser.Average, Rank = chosenUser.Rank, Status = chosenUser.Status, BestResult = chosenUser.BestResult, WorstResult = chosenUser.WorstResult}; 
                               string result = JsonConvert.SerializeObject(user);
                               FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
 
@@ -49,14 +69,26 @@ namespace Fitnes.ViewModel
                       }));
             }
         }
+        private RelayCommand showSome;
+        public RelayCommand ShowSome
+        {
+            get
+            {
+                return showSome ??
+                    (showSome = new RelayCommand(obj =>
+                      {
+                          Users = DataFromJson.GetData(firstDay, lastDay);
+                      }));
+            }
+        }
         public ObservableDataSource<Point> UserTable { get; set; }
-        private UserAppData _chosenUser;
+        private UserAppData chosenUser;
         public UserAppData ChosenUser
         {
-            get { return _chosenUser; }
+            get { return chosenUser; }
             set
             {
-                _chosenUser = value;
+                chosenUser = value;
                 UserTable.Collection.Clear();
                 int g = 0;
                 foreach (int i in ChosenUser.StepsPerDay)
@@ -68,7 +100,7 @@ namespace Fitnes.ViewModel
         }
         public MainViewModel()
         {
-            Users = DataFromJson.GetData(1,30);//»змен€ет отображение данных по дн€м(первый день и последний)
+            Users = DataFromJson.GetData(1,30);
             UserTable = new ObservableDataSource<Point>();
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -76,6 +108,5 @@ namespace Fitnes.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
-
     }
 }
