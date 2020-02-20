@@ -17,16 +17,16 @@ namespace Fitnes.ViewModel
     {
         public static List<UserAppData> GetData(int firstFile,int lastFile)
         {
-            if (firstFile <= 0&&firstFile>29)
+            FileInfo AppFile = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            List<string> all = Directory.GetFiles(AppFile.DirectoryName+@"/Source").ToList();
+            if (firstFile <= 0||firstFile>all.Count-1)
                 firstFile = 1;
-            if (lastFile <= 1&&lastFile>30)
-                lastFile = 30;
+            if (lastFile <= 1 || lastFile >all.Count)
+                lastFile = all.Count;
             List<UserFromJson> Users = new List<UserFromJson>();
             List<UserAppData> userOuts = new List<UserAppData>();
             int _total = 0;
             int _rank = 1;
-            FileInfo AppFile = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            List<string> all = Directory.GetFiles(AppFile.DirectoryName+@"/Source").ToList();
             int amount = all.Count;
             try
             {
